@@ -49,7 +49,7 @@ $daytimeCode = $data->daytimeCode;
 $weatherCode = $data->weatherCode;
 $timeProgressionCode = $data->timeProgressionCode;
 // cst info block III
-$defaultLapTimeMin = $data->defaultLapTimeMin;
+$defaultLapTimeMin = $data->defaultLapTimeSec;
 $distanceKM = $data->distanceKM;
 $sharingCode = $data->sharingCode;
 $difficultyCode = $data->difficultyCode;
@@ -77,7 +77,7 @@ if ($jwt) {
             :cdCarTheme, :carId, :cdCarClass,
             :forzaRouteId, :customRoute,
             :laps, :cdSeason, :cdTimeOfDay, :cdWeather, :cdTimeProgression,
-            :defaultLapTimeMin, :distanceKM, :sharingCode, :cdDifficulty,
+            :defaultLapTimeSec, :distanceKM, :sharingCode, :cdDifficulty,
             :description,
             @trackId)";
         
@@ -107,7 +107,7 @@ if ($jwt) {
         $stmt->bindParam(':cdWeather', $weatherCode, PDO::PARAM_INT);
         $stmt->bindParam(':cdTimeProgression', $timeProgressionCode, PDO::PARAM_INT);
 
-        $stmt->bindParam(':defaultLapTimeMin', $defaultLapTimeMin, PDO::PARAM_INT);
+        $stmt->bindParam(':defaultLapTimeSec', $defaultLapTimeSec, PDO::PARAM_INT);
         $stmt->bindParam(':distanceKM', $distanceKM, PDO::PARAM_INT);
         $stmt->bindParam(':sharingCode', $sharingCode, PDO::PARAM_INT);
         $stmt->bindParam(':cdDifficulty', $difficultyCode, PDO::PARAM_INT);

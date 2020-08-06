@@ -168,7 +168,7 @@ if ($jwt) {
                 "timeProgressionCode" => $row['COD_TimeProgression'],
                 "timeProgressionText" => $row['TXT_TimeProgression'],
                 // cst info block III
-                "defaultLapTimeMin" => $row['RAT_DefaultLapTimeMin'],
+                "defaultLapTimeSec" => $row['RAT_DefaultLapTimeSec'],
                 "distanceKM" => $row['RAT_DistanceKM'],
                 "sharingCode" => $row['RAT_SharingCode'],
 				"difficultyCode" => $row['COD_Difficulty'],
