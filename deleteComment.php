@@ -32,46 +32,23 @@ $secret_key = $apiService->getApiKey();
 
 if ($jwt) {
     try {
-        $decoded = JWT::decode($jwt, $secret_key, array('HS256'));        
-        // Access is granted - get actual data                
+        $decoded = JWT::decode($jwt, $secret_key, array('HS256'));
+        $userId = $decoded->data->userId;
+        // Access is granted - get actual data
 
-        // Databae Connectivity
+        // Database Connectivity
         $conn = null;
         $databaseService = new DatabaseService();
         $conn = $databaseService->getConnection();
 
-        // 1. get file name from handle
-        $sql = "CALL readFileName(:fileId)";        
-        
+        $sql = "CALL deleteComment(:userId, :id)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':fileId', $id, PDO::PARAM_INT);
+
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
         $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $cnt = $stmt->rowCount();            
-
-        $fileName = null;
-        if ($cnt == 1) {
-            $fileName = $apiService->getUploadDir() . $row['MVF_FileName'];
-            $stmt->closeCursor();
-        } // else: internal error, file handle not found (would still return ok to caller)
-
-        // 2. delete file
-        $removed = null;
-        if (!is_null($fileName)) {
-            $removed = unlink($fileName);
-        }
-
-        // 3. unregister file from database
-        if ($removed) {
-            $sql = "CALL deleteMvfEntry(:fileId)";
-            $stmt = $conn->prepare($sql);
-
-            $stmt->bindParam(':fileId', $id, PDO::PARAM_INT);
-            $stmt->execute();
-        }
         
-        // return OK regardless of internal (possible failure is not a client issue)
         http_response_code(200);
     } catch (Exception $ex) {
         http_response_code(401); // unauthorized (wohl token falsch/expired)

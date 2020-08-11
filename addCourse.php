@@ -53,7 +53,7 @@ $defaultLapTimeMin = $data->defaultLapTimeSec;
 $distanceKM = $data->distanceKM;
 $sharingCode = $data->sharingCode;
 $difficultyCode = $data->difficultyCode;
-$desciption = $data->description;
+$description = $data->description;
 $trackId = 0; // returned from SP
 
 // terrain
