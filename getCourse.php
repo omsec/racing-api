@@ -125,13 +125,6 @@ if ($jwt) {
 				"sharingModeText" => $row['TXT_Sharing']
             );
 
-            $ratingInfo = array(
-                "rating" => $row['RAV_Rating'],
-                "upVotes" => $row['RAV_UpVotes'],
-                "downVotes" => $row['RAV_DownVotes'],
-                "userVote" => $row['RAV_UserVote']
-            );
-
             // build response
             echo json_encode(array(
                 "metaInfo" => $metaInfo,
@@ -176,7 +169,7 @@ if ($jwt) {
                 "description" => $row['RAT_Description'],
                 // additional
                 "terrain" => $terrain,
-                "ratingInfo" => $ratingInfo,
+                "rating" => $row['RAV_Rating'],
                 "images" => $images
             ));
 

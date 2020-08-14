@@ -25,7 +25,7 @@ $data = json_decode(file_get_contents("php://input"));
 // Extract Body
 $championshipId = $data->championshipId;
 
-// Extract Token
+// Read from Token
 $userId = 0;
 
 // embbed objects (by convention)
@@ -124,12 +124,6 @@ if ($jwt) {
                 "sharingModeCode" => $row['COD_SharingMode'],
 				"sharingModeText" => $row['TXT_SharingMode']
             );
-            $ratingInfo = array(
-                "rating" => $row['RAV_Rating'],
-                "upVotes" => $row['RAV_UpVotes'],
-                "downVotes" => $row['RAV_DownVotes'],
-                "userVote" => $row['RAV_UserVote']
-            );
 
             // build response
             echo json_encode(array(
@@ -140,7 +134,7 @@ if ($jwt) {
                 "blueprintName" => $row['CMP_Name'],
                 "description" => $row['CMP_Description'],
                 "races" => $races,
-                "ratingInfo" => $ratingInfo
+                "rating" => $row['RAV_Rating']
             ));
 
             $stmt->closeCursor();

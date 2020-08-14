@@ -68,7 +68,11 @@ if ($jwt) {
                 $tracks[$idx]['trackId'] = $row['RAT_TrackId'];
                 $tracks[$idx]['typeCode'] = $row['COD_Type'];
                 $tracks[$idx]['seriesCode'] = $row['COD_Series'];
-                $tracks[$idx]['trackName'] = $row['RAT_Name'];                
+                $tracks[$idx]['trackName'] = $row['RAT_Name'];
+                $tracks[$idx]['carClassCode'] = $row['COD_CarClass'];
+                $tracks[$idx]['carThemeCode'] = $row['COD_CarTheme'];
+                $tracks[$idx]['carId'] = $row['VEC_CarId'];
+                $tracks[$idx]['carName'] = $row['VEC_CarName'];
                 $idx++;
             }            
             $stmt->closeCursor();
