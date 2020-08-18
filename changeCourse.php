@@ -47,11 +47,11 @@ $daytimeCode = $data->daytimeCode;
 $weatherCode = $data->weatherCode;
 $timeProgressionCode = $data->timeProgressionCode;
 // cst info block III
-$defaultLapTimeMin = $data->defaultLapTimeMin;
+$defaultLapTimeSec = $data->defaultLapTimeSec;
 $distanceKM = $data->distanceKM;
 $sharingCode = $data->sharingCode;
 $difficultyCode = $data->difficultyCode;
-$desciption = $data->description;
+$description = $data->description;
 
 // terrain
 $terrain = $data->terrain;
@@ -59,7 +59,7 @@ $terrain = $data->terrain;
 if ($jwt) {
     try {
         $decoded = JWT::decode($jwt, $secret_key, array('HS256'));
-        // $username = $decoded->data->username;
+        $userId = $decoded->data->userId;
         // Access is granted.        
 
         // Database Connectivity
@@ -76,7 +76,7 @@ if ($jwt) {
             :cdCarTheme, :carId, :cdCarClass,
             :forzaRouteId, :customRoute,
             :laps, :cdSeason, :cdTimeOfDay, :cdWeather, :cdTimeProgression,
-            :defaultLapTimeMin, :distanceKM, :sharingCode, :cdDifficulty,
+            :defaultLapTimeSec, :distanceKM, :sharingCode, :cdDifficulty,
             :description)";
         
         $stmt = $conn->prepare($sql);
@@ -103,7 +103,7 @@ if ($jwt) {
         $stmt->bindParam(':cdWeather', $weatherCode, PDO::PARAM_INT);
         $stmt->bindParam(':cdTimeProgression', $timeProgressionCode, PDO::PARAM_INT);
 
-        $stmt->bindParam(':defaultLapTimeMin', $defaultLapTimeMin, PDO::PARAM_INT);
+        $stmt->bindParam(':defaultLapTimeSec', $defaultLapTimeSec, PDO::PARAM_INT);
         $stmt->bindParam(':distanceKM', $distanceKM, PDO::PARAM_INT);
         $stmt->bindParam(':sharingCode', $sharingCode, PDO::PARAM_INT);
         $stmt->bindParam(':cdDifficulty', $difficultyCode, PDO::PARAM_INT);
