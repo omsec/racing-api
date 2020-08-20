@@ -1,11 +1,13 @@
 <?php
+include_once './config/variables.php';
+
 // used to get mysql database connection
 class DatabaseService{
 
-    private $db_host = "localhost";
-    private $db_name = "";
-    private $db_user = "";
-    private $db_password = "";
+    private $db_host = DB_hostName;
+    private $db_name = DB_databaseName;
+    private $db_user = DB_userName;
+    private $db_password = DB_password;
     private $connection;
 
     public function getConnection(){

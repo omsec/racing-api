@@ -13,6 +13,10 @@ $data = json_decode(file_get_contents("php://input"));
 // Extract Body
 $username = $data->username;
 $password = $data->password;
+$originIP = $data->ipAddress;
+
+// internal
+$status = null;
 
 // Database Connectivity
 $conn = null;
@@ -99,14 +103,15 @@ try {
                     // evtl. ncoch => $exp mitgeben zur info (expireAt)
                 )
             );                       
-    
+            $status = 0; // ok
             http_response_code(200);
         }
         else {
-        // Header gemäss Wikipedia ;-)     
-        header('WWW-Authenticate: invalid user/password.');
-        echo json_encode(array("message" => "Login failed."));        
-        http_response_code(401);
+            // Header gemäss Wikipedia ;-)     
+            header('WWW-Authenticate: invalid user/password.');
+            echo json_encode(array("message" => "Login failed."));        
+            http_response_code(401);
+            $status = 2; // inv pwd
         }
     
         // aufräumen unabhängig vom Result (pwd check)
@@ -120,7 +125,19 @@ try {
         header('WWW-Authenticate: invalid user/password');
         echo json_encode(array("message" => "Login failed."));
         http_response_code(401);
+        $status = 1; // inv usr
     }
+
+    // internal logging
+    $sql = "CALL createAuditAction(:cdAction, :originIP, :userName, :cdStatus)";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindValue(':cdAction', 0, PDO::PARAM_INT);
+    $stmt->bindParam(':originIP', $originIP, PDO::PARAM_STR);
+    $stmt->bindParam(':userName', $username, PDO::PARAM_STR);
+    $stmt->bindParam(':cdStatus', $status, PDO::PARAM_INT);
+
+    $stmt->execute();
 
 } catch (PDOException $ex) {
     // technical error
