@@ -4,7 +4,7 @@
     define('API_KEY', 'YOUR_SECRET_KEY');
 
     define('DB_hostName', 'localhost');
-    define('DB_databaseName', 'sdsds');
-    define('DB_userName', 'dsdsd');
-    define('DB_password', 'dsdsds');
+    define('DB_databaseName', '');
+    define('DB_userName', '');
+    define('DB_password', '');
 ?>
